@@ -1,0 +1,46 @@
+pipeline {
+    agent { label 'linux' }
+
+    environment {
+        PIO_CACHE = "${WORKSPACE}/.cache/pio"
+        HOME = "${WORKSPACE}"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Prepare Cache') {
+            steps {
+                sh '''
+                    mkdir -p ${PIO_CACHE}
+                '''
+            }
+        }
+
+        stage('Build with PlatformIO Docker') {
+            steps {
+                sh '''
+                    docker run --rm \
+                        -e HOME=${HOME} \
+                        -w ${WORKSPACE} \
+                        -v ${WORKSPACE}:${WORKSPACE} \
+                        -v ${PIO_CACHE}:/tmp/pio \
+                        ghcr.io/pbrier/platformio:latest \
+                        platformio run
+                '''
+            }
+        }
+
+        stage('Archive Firmware') {
+            steps {
+                archiveArtifacts artifacts: '.pio/build/mkr_wifi1010/firmware.bin',
+                                  fingerprint: true,
+                                  allowEmptyArchive: false
+            }
+        }
+    }
+}

@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent any   // Build runs on the main Jenkins node (Windows Docker)
 
     stages {
         stage('Build') {
@@ -10,14 +10,17 @@ pipeline {
         }
 
         stage('Flash via Raspberry Pi') {
+            agent { label 'rpi5' }  // <--- IMPORTANT: run this stage on the Pi
             steps {
                 sh '''
-                    scp .pio/build/mkr_wifi1010/firmware.bin qteal@gitlabrunner.local:/tmp/firmware.bin
-                    
-                    ssh qteal@gitlabrunner.local << 'EOF'
-                        DEVICE=$(readlink -f /dev/dut || echo "/dev/ttyACM0")
-                        arduino-cli upload -b arduino:samd:mkrwifi1010 -p "$DEVICE" --input-file /tmp/firmware.bin
-                        rm -f /tmp/firmware.bin
+                    DEVICE=$(readlink -f /dev/dut || echo "/dev/ttyACM0")
+
+                    echo "Using device: $DEVICE"
+
+                    arduino-cli upload \
+                        -b arduino:samd:mkrwifi1010 \
+                        -p "$DEVICE" \
+                        --input-file .pio/build/mkr_wifi1010/firmware.bin
                 '''
             }
         }

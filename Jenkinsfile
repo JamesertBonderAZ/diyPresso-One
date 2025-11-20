@@ -1,12 +1,12 @@
 pipeline {
     agent any
 
+    environment {
+        // You can define cache location if desired
+        PIO_CACHE = "/tmp/pio"
+    }
+
     stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello Pipeline'
-            }
-        }
 
         stage('Checkout') {
             steps {
@@ -14,24 +14,21 @@ pipeline {
             }
         }
 
-        stage('Install PlatformIO') {
+        stage('Build firmware (PlatformIO Docker)') {
             steps {
-                bat '''
-                    pip install --upgrade pip
-                    pip install --upgrade platformio
-                '''
+                script {
+                    docker.image('ghcr.io/pbrier/platformio:latest').inside(
+                        "-e HOME=${WORKSPACE} -v ${WORKSPACE}:${WORKSPACE} -w ${WORKSPACE}"
+                    ) {
+                        sh 'platformio run'
+                    }
+                }
             }
         }
 
-        stage('Build Firmware') {
+        stage('Archive firmware') {
             steps {
-                bat 'platformio run'
-            }
-        }
-
-        stage('Archive Firmware') {
-            steps {
-                archiveArtifacts artifacts: '.pio/build/mkr_wifi1010/firmware.bin'
+                archiveArtifacts artifacts: '.pio/build/mkr_wifi1010/firmware.bin', fingerprint: true
             }
         }
     }

@@ -10,7 +10,6 @@ pipeline {
         }
 
         stage('Flash via Raspberry Pi') {
-            when { branch 'main' }
             steps {
                 sh '''
                     scp .pio/build/mkr_wifi1010/firmware.bin qteal@gitlabrunner.local:/tmp/firmware.bin

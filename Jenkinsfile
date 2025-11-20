@@ -1,5 +1,5 @@
 pipeline {
-    agent any   // Build runs on the main Jenkins node (Windows Docker)
+    agent { label 'rpi5' }
 
     stages {
         stage('Build') {
@@ -9,12 +9,10 @@ pipeline {
             }
         }
 
-        stage('Flash via Raspberry Pi') {
-            agent { label 'rpi5' }  // <--- IMPORTANT: run this stage on the Pi
+        stage('Flash') {
             steps {
                 sh '''
-                    DEVICE=$(readlink -f /dev/dut || echo "/dev/ttyACM0")
-
+                    DEVICE=$(readlink -f /dev/dut || echo "/dev/ttyACM1")
                     echo "Using device: $DEVICE"
 
                     arduino-cli upload \

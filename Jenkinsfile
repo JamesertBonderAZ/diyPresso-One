@@ -35,9 +35,9 @@ pipeline {
             steps {
                 // Flash firmware via arduino-cli on Pi
                 sh """
-                sshpass -p $PI_PASS ssh $PI_USER@$PI_HOST 'DEVICE=\\\$(readlink -f /dev/dut) && \
-                echo "Uploading to diyPresso at \\\$DEVICE" && \
-                arduino-cli upload -b arduino:samd:mkrwifi1010 -p \\\$DEVICE --input-file $REMOTE_PATH'
+                sshpass -p $PI_PASS ssh $PI_USER@$PI_HOST "DEVICE=\\\$(readlink -f /dev/dut) && \
+                echo 'Uploading to diyPresso at \\\$DEVICE' && \
+                arduino-cli upload -b arduino:samd:mkrwifi1010 -p \\\$DEVICE --input-file $REMOTE_PATH"
                 """
             }
         }

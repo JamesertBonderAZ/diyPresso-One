@@ -11,7 +11,7 @@ pipeline {
         }
 
         stage('Flash on RPi5') {
-            agent { label 'rpi5' }   // Run THIS stage on RPi5 agent
+            agent { label 'rpi5' } 
             steps {
                 // Bring the firmware blob to the Pi 5
                 unstash 'firmware'

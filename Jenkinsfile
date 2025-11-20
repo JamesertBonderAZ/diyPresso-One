@@ -1,50 +1,32 @@
 pipeline {
     agent any
 
-    environment {
-        PI_HOST = "gitlabrunner.local"
-        PI_USER = "qteal"
-        PI_PASS = "Welcome"
-        FIRMWARE_PATH = ".pio/build/mkr_wifi1010/firmware.bin"
-        REMOTE_PATH = "/tmp/firmware.bin"
-    }
-
     stages {
-        stage('Checkout') {
+        stage('Build') {
             steps {
                 checkout scm
-            }
-        }
-
-        stage('Build diyPresso-One') {
-            steps {
                 sh 'platformio run'
             }
         }
 
-        stage('Send Firmware to Pi') {
+        stage('Flash via Raspberry Pi') {
+            when { branch 'main' }
             steps {
-                // Transfer firmware via scp using sshpass
-                sh """
-                sshpass -p $PI_PASS scp $FIRMWARE_PATH $PI_USER@$PI_HOST:$REMOTE_PATH
-                """
+                sh '''
+                    scp .pio/build/mkr_wifi1010/firmware.bin qteal@gitlabrunner.local:/tmp/firmware.bin
+                    
+                    ssh qteal@gitlabrunner.local << 'EOF'
+                        DEVICE=$(readlink -f /dev/dut || echo "/dev/ttyACM0")
+                        arduino-cli upload -b arduino:samd:mkrwifi1010 -p "$DEVICE" --input-file /tmp/firmware.bin
+                        rm -f /tmp/firmware.bin
+                    EOF
+                '''
             }
         }
 
-        stage('Flash Firmware on Pi') {
+        stage('Archive') {
             steps {
-                // Flash firmware via arduino-cli on Pi
-                sh """
-                sshpass -p $PI_PASS ssh $PI_USER@$PI_HOST "DEVICE=\\\$(readlink -f /dev/dut) && \
-                echo 'Uploading to diyPresso at \\\$DEVICE' && \
-                arduino-cli upload -b arduino:samd:mkrwifi1010 -p \\\$DEVICE --input-file $REMOTE_PATH"
-                """
-            }
-        }
-
-        stage('Save Firmware') {
-            steps {
-                archiveArtifacts artifacts: '.pio/build/**/firmware.*', fingerprint: true
+                archiveArtifacts '.pio/build/**/firmware.*'
             }
         }
     }

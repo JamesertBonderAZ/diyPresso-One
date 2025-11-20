@@ -18,7 +18,6 @@ pipeline {
                         DEVICE=$(readlink -f /dev/dut || echo "/dev/ttyACM0")
                         arduino-cli upload -b arduino:samd:mkrwifi1010 -p "$DEVICE" --input-file /tmp/firmware.bin
                         rm -f /tmp/firmware.bin
-                    EOF
                 '''
             }
         }

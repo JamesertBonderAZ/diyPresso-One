@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     stages {
-
         stage('Hello') {
             steps {
                 echo 'Hello Pipeline'
@@ -15,23 +14,25 @@ pipeline {
             }
         }
 
-        stage('Build Firmware') {
-            agent {
-                docker {
-                    image 'ghcr.io/pbrier/platformio:latest'
-                    args '-e HOME=$PWD -v $PWD:$PWD -w $PWD'
-                }
-            }
+        stage('Install PlatformIO') {
             steps {
-                sh 'platformio run'
+                bat '''
+                    pip install --upgrade pip
+                    pip install --upgrade platformio
+                '''
+            }
+        }
+
+        stage('Build Firmware') {
+            steps {
+                bat 'platformio run'
             }
         }
 
         stage('Archive Firmware') {
             steps {
-                archiveArtifacts artifacts: '.pio/build/mkr_wifi1010/firmware.bin', fingerprint: true
+                archiveArtifacts artifacts: '.pio/build/mkr_wifi1010/firmware.bin'
             }
         }
-
     }
 }

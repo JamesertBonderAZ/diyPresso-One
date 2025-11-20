@@ -8,30 +8,23 @@ pipeline {
             }
         }
 
-        // Manual caching of ~/.platformio using stash/unstash (works everywhere, no plugin needed)
-        stage('Restore PlatformIO Cache') {
-            steps {
-                script {
-                    try {
-                        unstash 'platformio-cache'
-                        echo 'PlatformIO cache restored'
-                    } catch (err) {
-                        echo 'No PlatformIO cache found – will create one after build'
-                    }
-                }
-            }
-        }
-
-        stage('Install/Update PlatformIO') {
+        stage('Install Python & PlatformIO') {
             steps {
                 sh '''
+                    # Install python + pip if missing (jenkins user has sudo rights by default)
+                    which python3 || (apt-get update && apt-get install -y python3 python3-pip)
+
+                    # Install/upgrade PlatformIO
                     python3 -m pip install --upgrade --user platformio
+
+                    # Add pio to PATH for this build
                     export PATH="$HOME/.local/bin:$PATH"
+                    platformio --version
                 '''
             }
         }
 
-        stage('Build with PlatformIO') {
+        stage('Build Firmware') {
             steps {
                 sh '''
                     export PATH="$HOME/.local/bin:$PATH"
@@ -40,17 +33,10 @@ pipeline {
             }
         }
 
-        stage('Save PlatformIO Cache') {
-            steps {
-                stash includes: '.platformio/', name: 'platformio-cache'
-                echo 'PlatformIO cache saved for next build'
-            }
-        }
-
         stage('Archive Firmware') {
             steps {
-                archiveArtifacts artifacts: '.pio/build/**/firmware.*', 
-                                 fingerprint: true, 
+                archiveArtifacts artifacts: '.pio/build/**/firmware.*',
+                                 fingerprint: true,
                                  onlyIfSuccessful: true
             }
         }

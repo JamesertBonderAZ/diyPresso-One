@@ -31,7 +31,7 @@ pipeline {
 
                         # SSH and flash it (arduino-cli must be installed on the Pi)
                         ssh qteal@gitlabrunner.local << 'EOF'
-                            echo "123" | sudo -S echo "Starting flash..."  # if sudo needs password
+                            echo "Welcome" | sudo -S echo "Starting flash..."  # if sudo needs password
                             DEVICE=$(readlink -f /dev/dut 2>/dev/null || ls /dev/ttyACM* | head -1)
                             echo "Uploading to diyPresso at $DEVICE"
                             arduino-cli upload -b arduino:samd:mkrwifi1010 -p "$DEVICE" --input-file /home/qteal/firmware.bin || echo "Upload failed – is board connected?"

@@ -10,13 +10,13 @@
 #include "pid.h"
 
 /* Temperature limits (in Celsius) */
-#define BOILER_TEMP_WINDOW      10.0    /* In temperature range */
-#define BOILER_TEMP_LIMIT_HIGH  108.0   /* High temperature limit */
-#define BOILER_TEMP_LIMIT_LOW   1.0     /* Low temperature limit */
+#define BOILER_TEMP_WINDOW      (CONFIG_DIYPRESSO_TEMPERATURE_WINDOW / 10.0)    /* In temperature range */
+#define BOILER_TEMP_LIMIT_HIGH  (CONFIG_DIYPRESSO_TEMPERATURE_LIMIT_HIGH / 10.0) /* High temperature limit */
+#define BOILER_TEMP_LIMIT_LOW   (CONFIG_DIYPRESSO_TEMPERATURE_LIMIT_LOW / 10.0)  /* Low temperature limit */
 #define BOILER_TEMP_MIN_BREW    10.0    /* Minimum brew temperature */
 
 /* Timeouts (in milliseconds) */
-#define BOILER_TIMEOUT_HEATING      (600 * 1000)    /* 10 minutes max heating */
+#define BOILER_TIMEOUT_HEATING      (CONFIG_DIYPRESSO_TIMEOUT_HEATING * 1000)    /* Max heating time from config */
 #define BOILER_TIMEOUT_BREW         (3 * 60 * 1000) /* 3 minutes max brew */
 #define BOILER_TIMEOUT_READY        (2 * 60 * 60 * 1000) /* 2 hours max ready state */
 #define BOILER_TIMEOUT_CONTROL_MSEC (10 * 1000)     /* 10 seconds max between controls */

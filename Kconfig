@@ -1,0 +1,118 @@
+# Kconfig file for diyPresso
+
+mainmenu "diyPresso Configuration"
+
+config TEMP_WINDOW
+    int "Temperature window for in-range detection (in tenths of degrees)"
+    default 5
+    help
+      Temperature window for in-range detection in tenths of degrees Celsius.
+      Value will be divided by 10 to get actual temperature (e.g., 5 = 0.5°C).
+
+config BREW_TIMEOUT
+    int "Brew timeout in seconds"
+    default 60
+    help
+      Maximum time allowed for brewing before automatic shutoff.
+
+config PID_KP
+    int "PID Kp value (multiplied by 100 for integer storage)"
+    default 100
+    help
+      Proportional gain for PID controller multiplied by 100 for integer storage.
+
+config PID_KI
+    int "PID Ki value (multiplied by 100 for integer storage)"
+    default 50
+    help
+      Integral gain for PID controller multiplied by 100 for integer storage.
+
+config PID_KD
+    int "PID Kd value (multiplied by 100 for integer storage)"
+    default 25
+    help
+      Derivative gain for PID controller multiplied by 100 for integer storage.
+
+config REFERENCE_RESISTANCE
+    int "Reference resistance for RTD measurement in ohms"
+    default 430
+    help
+      Reference resistance for MAX31865 RTD measurements in ohms.
+
+config RREF
+    int "Reference resistor value in ohms"
+    default 430
+    help
+      Reference resistor value for MAX31865 calculations in ohms.
+
+config RNOMINAL
+    int "Nominal RTD resistance at 0°C in ohms"
+    default 1000
+    help
+      Nominal resistance of the RTD at 0°C in ohms.
+
+config HX711_GAIN
+    int "HX711 gain factor"
+    default 128
+    help
+      Gain factor for HX711 amplifier (128 or 64).
+
+config PUMP_PIN
+    int "GPIO pin for pump control"
+    default 2
+    help
+      GPIO pin number for pump SSR control.
+
+config HEATER_PIN
+    int "GPIO pin for heater control"
+    default 3
+    help
+      GPIO pin number for heater SSR control.
+
+config ENCODER_A_PIN
+    int "GPIO pin for encoder A"
+    default 16
+    help
+      GPIO pin number for rotary encoder A channel (PB0 = 16).
+
+config ENCODER_B_PIN
+    int "GPIO pin for encoder B"
+    default 17
+    help
+      GPIO pin number for rotary encoder B channel (PB1 = 17).
+
+config BUTTON_PIN
+    int "GPIO pin for button"
+    default 0
+    help
+      GPIO pin number for push button input (PA0 = 0).
+
+config BREW_SWITCH_PIN
+    int "GPIO pin for brew switch"
+    default 1
+    help
+      GPIO pin number for brew switch detection (PA1 = 1).
+
+config HX711_SCK_PIN
+    int "GPIO pin for HX711 clock"
+    default 4
+    help
+      GPIO pin number for HX711 clock signal (PA4 = 4).
+
+config HX711_DOUT_PIN
+    int "GPIO pin for HX711 data"
+    default 5
+    help
+      GPIO pin number for HX711 data signal (PA5 = 5).
+
+config MAX31865_CS_PIN
+    int "GPIO pin for MAX31865 CS"
+    default 7
+    help
+      GPIO pin number for MAX31865 chip select (PA7 = 7).
+
+config MAX31865_READY_PIN
+    int "GPIO pin for MAX31865 ready"
+    default 6
+    help
+      GPIO pin number for MAX31865 ready signal (PA6 = 6).

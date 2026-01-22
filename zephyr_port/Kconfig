@@ -1,0 +1,57 @@
+# SPDX-License-Identifier: Apache-2.0
+
+config DIYPRESSO_VERSION
+    string "diyPresso version string"
+    default "STM32L031K6-1.0.0"
+
+config DIYPRESSO_TEMPERATURE_WINDOW
+    int "Temperature window for in-range detection (in tenths of degrees)"
+    default 100
+    help
+      Temperature window in tenths of degrees Celsius for determining when the boiler
+      is in the desired temperature range. Value will be divided by 10 (e.g., 100 = 10.0°C).
+
+config DIYPRESSO_TEMPERATURE_LIMIT_HIGH
+    int "High temperature limit (in tenths of degrees)"
+    default 1080
+    help
+      Maximum temperature limit in tenths of degrees Celsius for safety cutoff.
+      Value will be divided by 10 (e.g., 1080 = 108.0°C).
+
+config DIYPRESSO_TEMPERATURE_LIMIT_LOW
+    int "Low temperature limit (in tenths of degrees)"
+    default 10
+    help
+      Minimum temperature limit in tenths of degrees Celsius for safety cutoff.
+      Value will be divided by 10 (e.g., 10 = 1.0°C).
+
+config DIYPRESSO_TIMEOUT_HEATING
+    int "Maximum heating timeout in seconds"
+    default 600
+    help
+      Maximum time in seconds the heater can remain on during heating phase.
+
+config DIYPRESSO_RESERVOIR_CAPACITY
+    int "Reservoir capacity in grams"
+    default 1500
+    help
+      Total capacity of the water reservoir in grams.
+
+config DIYPRESSO_RESERVOIR_EMPTY_LEVEL
+    int "Empty level threshold percentage (in hundredths)"
+    default 334
+    help
+      Percentage threshold in hundredths below which the reservoir is considered empty.
+      Value will be divided by 100 (e.g., 334 = 3.34%).
+
+config DIYPRESSO_SPI_MAX31865_NODE
+    string "Device tree node for MAX31865 temperature sensor"
+    default "spi1_cs0"
+    help
+      Device tree node identifier for the MAX31865 temperature sensor.
+
+config DIYPRESSO_I2C_LCD_NODE
+    string "Device tree node for LCD display"
+    default "i2c1"
+    help
+      Device tree node identifier for the LCD display.

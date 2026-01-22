@@ -1,11 +1,45 @@
-diyp-controller/.vscode/c_cpp_properties.json
-.vscode/c_cpp_properties.json
-.pio
-.platformio
-.bash_history
-.DS
+```
+# Build artifacts
+build/
+dist/
+*.o
+*.obj
+*.out
+
+# Dependencies
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+
+# Environment files
+.env
+.env.local
+*.env.*
+
+# Editors
+.vscode/
+.idea/
+
+# OS generated files
 .DS_Store
-.vscode/launch.json
-releases/macos/settings_*.txt
-releases/macos/arduino-cli
-releases/macos/arduino-cli-files
+Thumbs.db
+
+# Coverage reports
+coverage/
+htmlcov/
+.coverage
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+```

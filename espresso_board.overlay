@@ -1,0 +1,104 @@
+/*
+ * Device tree overlay for Espresso Controller on STM Nucleo MB1180 Rev C
+ */
+
+/ {
+	aliases {
+		brew-switch = &gpio0_pin0;
+		ssr-pump = &gpio0_pin1;
+		ssr-heater = &gpio0_pin2;
+		
+		hx711-clk = &gpio0_pin3;
+		hx711-dat = &gpio0_pin4;
+		
+		therm-rdy = &gpio0_pin5;
+		therm-cs = &gpio0_pin6;
+		therm-mosi = &gpio0_pin7;
+		therm-sclk = &gpio0_pin8;
+		therm-miso = &gpio0_pin9;
+		
+		lcd-sda = &gpio0_pin10;
+		lcd-scl = &gpio0_pin11;
+		
+		enc-a = &gpio0_pin12;
+		enc-b = &gpio0_pin13;
+		enc-s = &gpio0_pin14;
+	};
+};
+
+&gpio0 {
+	gpio0_pin0: brew-switch-pin {
+		gpios = <0 GPIO_ACTIVE_HIGH>;
+		label = "BREW_SWITCH";
+	};
+	
+	gpio0_pin1: ssr-pump-pin {
+		gpios = <1 GPIO_ACTIVE_HIGH>;
+		label = "SSR_PUMP";
+	};
+	
+	gpio0_pin2: ssr-heater-pin {
+		gpios = <2 GPIO_ACTIVE_HIGH>;
+		label = "SSR_HEATER";
+	};
+	
+	gpio0_pin3: hx711-clk-pin {
+		gpios = <3 GPIO_ACTIVE_HIGH>;
+		label = "HX711_CLK";
+	};
+	
+	gpio0_pin4: hx711-dat-pin {
+		gpios = <4 GPIO_ACTIVE_HIGH>;
+		label = "HX711_DAT";
+	};
+	
+	gpio0_pin5: therm-rdy-pin {
+		gpios = <5 GPIO_ACTIVE_HIGH>;
+		label = "THERM_RDY";
+	};
+	
+	gpio0_pin6: therm-cs-pin {
+		gpios = <6 GPIO_ACTIVE_HIGH>;
+		label = "THERM_CS";
+	};
+	
+	gpio0_pin7: therm-mosi-pin {
+		gpios = <7 GPIO_ACTIVE_HIGH>;
+		label = "THERM_MOSI";
+	};
+	
+	gpio0_pin8: therm-sclk-pin {
+		gpios = <8 GPIO_ACTIVE_HIGH>;
+		label = "THERM_SCLK";
+	};
+	
+	gpio0_pin9: therm-miso-pin {
+		gpios = <9 GPIO_ACTIVE_HIGH>;
+		label = "THERM_MISO";
+	};
+	
+	gpio0_pin10: lcd-sda-pin {
+		gpios = <10 GPIO_ACTIVE_HIGH>;
+		label = "LCD_SDA";
+	};
+	
+	gpio0_pin11: lcd-scl-pin {
+		gpios = <11 GPIO_ACTIVE_HIGH>;
+		label = "LCD_SCL";
+	};
+	
+	gpio0_pin12: enc-a-pin {
+		gpios = <12 GPIO_ACTIVE_HIGH>;
+		label = "ENC_A";
+	};
+	
+	gpio0_pin13: enc-b-pin {
+		gpios = <13 GPIO_ACTIVE_HIGH>;
+		label = "ENC_B";
+	};
+	
+	gpio0_pin14: enc-s-pin {
+		gpios = <14 GPIO_ACTIVE_HIGH>;
+		label = "ENC_S";
+	};
+};

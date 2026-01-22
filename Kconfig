@@ -1,0 +1,101 @@
+# SPDX-License-Identifier: Apache-2.0
+
+config ESPRESSO_CONTROLLER
+    bool "Espresso Controller"
+    default y
+    help
+      Enable the Espresso Controller application.
+
+if ESPRESSO_CONTROLLER
+
+config BREW_SWITCH_GPIO_PIN
+    int "Brew Switch GPIO Pin Number"
+    default 0
+    help
+      GPIO pin number for brew switch control.
+
+config PUMP_SSR_GPIO_PIN
+    int "Pump SSR GPIO Pin Number"
+    default 1
+    help
+      GPIO pin number for pump SSR relay control.
+
+config HEATER_SSR_GPIO_PIN
+    int "Heater SSR GPIO Pin Number"
+    default 2
+    help
+      GPIO pin number for heater SSR relay control.
+
+config HX711_CLK_GPIO_PIN
+    int "HX711 Clock GPIO Pin Number"
+    default 3
+    help
+      GPIO pin number for HX711 clock signal.
+
+config HX711_DAT_GPIO_PIN
+    int "HX711 Data GPIO Pin Number"
+    default 4
+    help
+      GPIO pin number for HX711 data signal.
+
+config THERM_READY_GPIO_PIN
+    int "Thermocouple Ready GPIO Pin Number"
+    default 5
+    help
+      GPIO pin number for thermocouple ready signal.
+
+config THERM_CS_GPIO_PIN
+    int "Thermocouple CS GPIO Pin Number"
+    default 6
+    help
+      GPIO pin number for thermocouple chip select.
+
+config THERM_MOSI_GPIO_PIN
+    int "Thermocouple MOSI GPIO Pin Number"
+    default 7
+    help
+      GPIO pin number for thermocouple MOSI signal.
+
+config THERM_SCLK_GPIO_PIN
+    int "Thermocouple SCLK GPIO Pin Number"
+    default 8
+    help
+      GPIO pin number for thermocouple SCLK signal.
+
+config THERM_MISO_GPIO_PIN
+    int "Thermocouple MISO GPIO Pin Number"
+    default 9
+    help
+      GPIO pin number for thermocouple MISO signal.
+
+config LCD_SDA_GPIO_PIN
+    int "LCD SDA GPIO Pin Number"
+    default 10
+    help
+      GPIO pin number for LCD SDA signal.
+
+config LCD_SCL_GPIO_PIN
+    int "LCD SCL GPIO Pin Number"
+    default 11
+    help
+      GPIO pin number for LCD SCL signal.
+
+config ENC_A_GPIO_PIN
+    int "Encoder A GPIO Pin Number"
+    default 12
+    help
+      GPIO pin number for encoder channel A.
+
+config ENC_B_GPIO_PIN
+    int "Encoder B GPIO Pin Number"
+    default 13
+    help
+      GPIO pin number for encoder channel B.
+
+config ENC_S_GPIO_PIN
+    int "Encoder Switch GPIO Pin Number"
+    default 14
+    help
+      GPIO pin number for encoder switch.
+
+endif # ESPRESSO_CONTROLLER

@@ -1,0 +1,86 @@
+/*
+ * Device Tree Overlay for diyPresso on STM32L031K6
+ */
+
+/ {
+	aliases {
+		enc-btn-gpio-port = &gpioa;
+		brew-sw-gpio-port = &gpioa;
+		ssr-heater-gpio-port = &gpioa;
+		ssr-pump-gpio-port = &gpioa;
+		enc-a-gpio-port = &gpiob;
+		enc-b-gpio-port = &gpiob;
+		hx711-clk-gpio-port = &gpioa;
+		hx711-dat-gpio-port = &gpioa;
+		therm-rdy-gpio-port = &gpioa;
+		therm-cs-gpio-port = &gpioa;
+	};
+	
+	gpioa: gpio@48000000 {
+		compatible = "st,stm32-gpio";
+		reg = <0x48000000 0x400>;
+		interrupts = <5 6 7 8>;
+		clocks = <&rcc STM32_CLOCK_LSE 0>;
+		st,gpioafs = <1 2 3 4 5 6 7 8 9 10 11 12 13 14 15>;
+		status = "okay";
+		gpio-lines = <16>; /* 16 GPIO lines available */
+	};
+
+	gpiob: gpio@48000400 {
+		compatible = "st,stm32-gpio";
+		reg = <0x48000400 0x400>;
+		interrupts = <9 10 11 12>;
+		clocks = <&rcc STM32_CLOCK_LSE 0>;
+		st,gpioafs = <1 2 3 4 5 6 7 8 9 10 11 12 13 14 15>;
+		status = "okay";
+		gpio-lines = <16>; /* 16 GPIO lines available */
+	};
+
+	spi1: spi@40013000 {
+		compatible = "st,stm32-spi";
+		reg = <0x40013000 0x400>;
+		interrupts = <35>;
+		clocks = <&rcc STM32_CLOCK_PCLK1 0>;
+		dmas = <&dma1 0 2 0x400 0x0>, <&dma1 1 2 0x400 0x0>;
+		dma-names = "rx", "tx";
+		cs-gpios = <&gpioa 7 GPIO_ACTIVE_LOW>;  /* PA7 for MAX31865 CS */
+		status = "okay";
+
+		max31865@0 {
+			compatible = "maxim,max31865";
+			reg = <0>;
+			spi-max-frequency = <1000000>;
+			r-ref = <4300>;  /* Reference resistor value for PT1000 */
+			r-nominal = <1000>;  /* Nominal resistance at 0°C for PT1000 */
+		};
+	};
+
+	i2c1: i2c@40005400 {
+		compatible = "st,stm32-i2c-v2";
+		reg = <0x40005400 0x400>;
+		interrupts = <34>;
+		clocks = <&rcc STM32_CLOCK_PCLK1 0>;
+		status = "okay";
+
+		lcd@27 {
+			compatible = "lcd,hitachi-hd44780";
+			reg = <0x27>;
+			lines = <4>;
+			columns = <20>;
+			delay-setup-us = <40000>;
+			delay-init-us = <100>;
+			delay-write-us = <40>;
+			delay-read-us = <10>;
+		};
+	};
+
+	/* Timer for encoder debouncing */
+	timer2: timer@40000000 {
+		compatible = "st,stm32-timer";
+		reg = <0x40000000 0x400>;
+		interrupts = <28>;
+		clocks = <&rcc STM32_CLOCK_PCLK1 0>;
+		st,adc-trig-sel = <0>;
+		status = "okay";
+	};
+};

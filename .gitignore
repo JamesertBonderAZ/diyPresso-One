@@ -1,11 +1,45 @@
-diyp-controller/.vscode/c_cpp_properties.json
-.vscode/c_cpp_properties.json
-.pio
-.platformio
-.bash_history
-.DS
+```
+# Build artifacts
+build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+*.cmake
+*.o
+*.a
+*.elf
+*.hex
+*.bin
+
+# Zephyr specific
+zephyr/
+zephyr_build/
+*CMakeFiles*
+compile_commands.json
+
+# Dependencies
+modules/
+tools/
+scripts/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment
+.env
+.env.local
+.env.*
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
 .DS_Store
-.vscode/launch.json
-releases/macos/settings_*.txt
-releases/macos/arduino-cli
-releases/macos/arduino-cli-files
+Thumbs.db
+```
